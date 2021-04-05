@@ -1,0 +1,81 @@
+{
+  "name": "k-boot",
+  "version": "0.0.1",
+  "main": "./lib/index.js",
+  "module": "./esm/index.js",
+  "files": [
+    "bin/",
+    "lib/",
+    "esm/"
+  ],
+  "scripts": {
+    "test-debug": "node --inspect-brk=9228 ./node_modules/jest/bin/jest --runInBand",
+    "test": "jest --runInBand",
+    "watch": "tsc -p ./tsconfig.json --watch",
+    "build": "npm run clear && tsc -p config/tsconfig.prod.json && tsc -p config/tsconfig.esm.prod.json",
+    "clear": "rimraf lib dist esm",
+    "prepublishOnly": "npm run build",
+    "pub": "npm publish --registry=https://registry.npmjs.org/ && git push"
+  },
+  "bin": {
+    "k-boot": "bin/index.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.13.14",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "babel-loader": "^8.2.2",
+    "chalk": "^4.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^8.1.0",
+    "cross-spawn": "^7.0.3",
+    "css-loader": "^5.2.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "less": "^4.1.1",
+    "less-loader": "7",
+    "portfinder": "^1.0.28",
+    "raw-loader": "^4.0.2",
+    "react-convention-router": "^0.2.2",
+    "semver": "^7.3.5",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "4",
+    "webpack-chain": "^6.5.1",
+    "webpack-dev-server": "3",
+    "yargs": "^16.2.0"
+  },
+  "devDependencies": {
+    "@ali-whale/eslint-config": "^1.1.2",
+    "@types/chokidar": "^2.1.3",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.37",
+    "@types/yargs": "^16.0.1",
+    "jest": "^26.6.3",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.5.4",
+    "typescript": "^4.2.3"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    }
+  },
+  "author": "",
+  "license": "MIT",
+  "cbdTemplateInfo": {
+    "templateName": "node-proj",
+    "hash": "39a0e8f7dc0a1a3f0d3abe718618eae5465665883233de7cc12cf5d1e64ef8a8",
+    "lastUpdateTime": "2021-01-23T13:53:31.299Z"
+  }
+}
