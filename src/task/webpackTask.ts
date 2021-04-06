@@ -137,7 +137,7 @@ function watchRoutes(cwd: string, callback?: () => void) {
   scanRoutes({
     watch: mode === 'development',
     pageRoot: resolve(cwd, srcPath, 'pages'),
-    templateFile: resolve(__dirname, 'routes/RouterConfig.template.js'),
+    templateFile: resolve(__dirname, '../../assets/RouterConfig.template.js'),
     modifyRoutes(routes) {
       if (first) {
         callback?.();

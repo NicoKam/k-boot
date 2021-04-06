@@ -6,7 +6,7 @@
   "files": [
     "bin/",
     "lib/",
-    "esm/"
+    "assets/"
   ],
   "scripts": {
     "watch": "tsc -p ./tsconfig.json --watch",
