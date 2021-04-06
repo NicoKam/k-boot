@@ -11,7 +11,11 @@ import type { IOptions } from '../def';
 export default function defaultPlugin(config: Config, options: IOptions) {
   const { rootPath, srcPath, mode } = options;
   config.plugin('clean-plugin').use(CleanWebpackPlugin);
-  config.plugin('html-plugin').use(HtmlPlugin, [{ template: resolve(rootPath, srcPath, 'index.html') }]);
+  let indexHtmlPath = resolve(rootPath, srcPath, 'index.html');
+  if (existsSync(indexHtmlPath)) {
+    indexHtmlPath = resolve(__dirname, '../../../assets/index.html');
+  }
+  config.plugin('html-plugin').use(HtmlPlugin, [{ template: indexHtmlPath }]);
   const publicPath = resolve(rootPath, './public');
   if (existsSync(publicPath) && readdirSync(publicPath).length) {
     config.plugin('copy-plugin').use(CopyWebpackPlugin, [
