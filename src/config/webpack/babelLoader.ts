@@ -1,15 +1,20 @@
-import Config from 'webpack-chain';
-import { IOptions } from './def';
+import type Config from 'webpack-chain';
+import type { IOptions } from '../def';
+
 export default function babelLoader(config: Config, options: IOptions) {
-  const { rootPath } = options;
+  const { mode } = options;
+  function ifDev<T>(t: T, f: T) {
+    if (mode === 'development') return t;
+    return f;
+  }
 
   // js/ts loader
   config.module
     .rule('js')
     .test(/\.([jt]sx?)$/)
 
-    // .include.add(resolve(rootPath, 'src'))
-    // .end()
+  // .include.add(resolve(rootPath, 'src'))
+  // .end()
 
     .exclude.add(/node_modules/)
     .end()
@@ -27,7 +32,7 @@ export default function babelLoader(config: Config, options: IOptions) {
     .options({
       presets: [['@babel/preset-env', { modules: false }], '@babel/preset-react', '@babel/preset-typescript'],
       plugins: [
-        ['react-refresh/babel'],
+        ...ifDev([['react-refresh/babel']], []),
         // ['react-hot-loader/babel'],
         ['@babel/plugin-proposal-class-properties', { loose: true }],
         [

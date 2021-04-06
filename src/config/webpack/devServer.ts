@@ -1,6 +1,7 @@
 import { resolve } from 'path';
-import Config from 'webpack-chain';
-import { IOptions } from './def';
+import type Config from 'webpack-chain';
+import type { IOptions } from '../def';
+
 export default function devServer(config: Config, options: IOptions) {
   const { rootPath } = options;
   config.devServer

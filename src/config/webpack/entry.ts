@@ -1,11 +1,12 @@
 import { resolve } from 'path';
-import Config from 'webpack-chain';
-import { IOptions } from './def';
+import type Config from 'webpack-chain';
+import type { IOptions } from '../def';
+
 export default function entry(config: Config, options: IOptions) {
-  const { rootPath } = options;
+  const { rootPath, srcPath } = options;
   config
     // 入口
     .entry('main')
     // .add('react-hot-loader/patch')
-    .add(resolve(rootPath, 'src/index'));
+    .add(resolve(rootPath, srcPath, 'index'));
 }

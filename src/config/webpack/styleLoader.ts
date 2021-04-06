@@ -1,7 +1,8 @@
-import Config from 'webpack-chain';
-import { IOptions } from './def';
+import type Config from 'webpack-chain';
+import type { IOptions } from '../def';
+
 export default function styleLoader(config: Config, options: IOptions) {
-  const { rootPath, modifyVars = {} } = options;
+  const { modifyVars = {}} = options;
   const DEV_MODE = process.env.NODE_ENV === 'development';
 
   // css loader

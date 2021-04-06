@@ -20,7 +20,8 @@ config
   // .add('react-hot-loader/patch')
   .add(resolve(rootPath, 'src/index'));
 // 输出
-config.output.path(resolve(rootPath, 'dist')).filename('[name].bundle.js').publicPath('/');
+config.output.path(resolve(rootPath, 'dist')).filename('[name].bundle.js')
+  .publicPath('/');
 
 config.node.set('__dirname', true);
 
@@ -46,7 +47,10 @@ config.externals({
 // });
 config.resolve.alias.set('@', join(rootPath, 'src'));
 config.resolve.modules.add(join(rootPath, 'node_modules')).add(join(rootPath, 'src'));
-config.resolve.extensions.add('.js').add('.jsx').add('.ts').add('.tsx').add('.json');
+config.resolve.extensions.add('.js').add('.jsx')
+  .add('.ts')
+  .add('.tsx')
+  .add('.json');
 
 // plugins
 config.plugin('clean-plugin').use(CleanWebpackPlugin);
@@ -69,8 +73,8 @@ config.module
   .rule('js')
   .test(/\.([jt]sx?)$/)
 
-  // .include.add(resolve(rootPath, 'src'))
-  // .end()
+// .include.add(resolve(rootPath, 'src'))
+// .end()
 
   .exclude.add(/node_modules/)
   .end()

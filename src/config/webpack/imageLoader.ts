@@ -1,5 +1,6 @@
-import Config from 'webpack-chain';
-import { IOptions } from './def';
+import type Config from 'webpack-chain';
+import type { IOptions } from '../def';
+
 export default function imageLoader(config: Config, options: IOptions) {
   // image loader
   config.module
