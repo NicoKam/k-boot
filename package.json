@@ -20,11 +20,11 @@
     "k-boot": "bin/index.js"
   },
   "lint-staged": {
-    "*.js?(x)$": [
+    "*.js?(x)": [
       "prettier --write",
       "eslint --fix --quiet"
     ],
-    "*.ts?(x)$": [
+    "*.ts?(x)": [
       "prettier --parser=typescript --write",
       "eslint --fix --quiet"
     ]
@@ -70,6 +70,7 @@
     "eslint": "^7.23.0",
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.2.3"
   },

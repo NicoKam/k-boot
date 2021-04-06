@@ -3,8 +3,6 @@ import registerDev from './scripts/dev';
 import registerBuild from './scripts/build';
 import logger, { LoggerLevel } from './utils/logger';
 
-const a= 1;
-
 if (yargs.argv.verbose) {
   logger.loggerLevel = LoggerLevel.debug;
 }
