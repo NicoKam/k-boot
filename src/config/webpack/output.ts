@@ -7,5 +7,5 @@ export default function output(config: Config, options: IOptions) {
   config.output
     .path(join(resolve(rootPath, 'dist'), publicPath))
     .filename('[name].bundle.js')
-    .publicPath('/');
+    .publicPath(publicPath);
 }
