@@ -1,6 +1,6 @@
 {
   "name": "k-boot",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./lib/index.js",
   "module": "./esm/index.js",
   "files": [
