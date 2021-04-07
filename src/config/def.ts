@@ -8,6 +8,8 @@ export interface IOptions {
 
   srcPath: string;
 
+  publicPath: string;
+
   modifyVars?: Record<string, string>;
 
   mode: Env;
@@ -16,7 +18,9 @@ export interface IOptions {
 export type Env = 'development' | 'production';
 
 export interface KBootConfig {
+  base?: string;
   srcPath?: string;
+  publicPath?: string;
   chainWebpack?: (config: Config, other: { webpack: typeof webpack; env: Env }) => void;
   less?: {
     modifyVars?: IOptions['modifyVars'];
@@ -24,6 +28,8 @@ export interface KBootConfig {
 }
 
 export const defaultKBootConfig: Required<KBootConfig> = {
+  base: '/',
+  publicPath: '/',
   srcPath: 'src',
   chainWebpack: () => {},
   less: {},

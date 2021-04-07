@@ -115,6 +115,7 @@ function startWebpack(cwd = process.cwd()) {
   const config = getWebpackConfig({
     rootPath: cwd,
     srcPath: userConfig.srcPath,
+    publicPath: userConfig.publicPath,
     modifyVars: userConfig.less.modifyVars,
     mode,
   });
@@ -133,9 +134,26 @@ function startWebpack(cwd = process.cwd()) {
 
 function watchRoutes(cwd: string, callback?: () => void) {
   const mode = process.env.NODE_ENV as Env;
-  const { srcPath } = userConfig;
+  const { srcPath, base } = userConfig;
   let first = true;
   const outputIndexPath = resolve(cwd, srcPath, 'pages', '.entry', 'index.js');
+
+  const template = `
+import React from 'react';
+import { createBrowserHistory } from 'k-history';
+import { asyncComponent, RouterWithChildren } from 'react-convention-router/tools';
+
+const history = createBrowserHistory({
+  basename: ${JSON.stringify(base)},
+});
+
+const devMode = process.env.NODE_ENV === 'development';
+
+const routeConfig = @routeConfig;
+
+export default () => <RouterWithChildren history={history} routes={routeConfig} />;
+
+  `;
 
   scanRoutes({
     watch: mode === 'development',
@@ -145,7 +163,8 @@ function watchRoutes(cwd: string, callback?: () => void) {
       mkdirSync(dirname(outputIndexPath), { recursive: true });
       writeFileSync(outputIndexPath, templateStr.replace('@routeConfig', outputStr));
     },
-    templateFile: resolve(__dirname, '../../assets/RouterConfig.template.js'),
+    templateFile: undefined,
+    template,
     modifyRoutes(routes) {
       if (first) {
         callback?.();

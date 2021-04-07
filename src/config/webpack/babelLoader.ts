@@ -30,11 +30,16 @@ export default function babelLoader(config: Config, options: IOptions) {
     .use('babel-loader')
     .loader('babel-loader')
     .options({
-      presets: [['@babel/preset-env', { modules: false }], '@babel/preset-react', '@babel/preset-typescript'],
+      presets: [
+        ['@babel/preset-env', { modules: false }],
+        '@babel/preset-react',
+        '@babel/preset-typescript',
+      ],
       plugins: [
         ...ifDev([['react-refresh/babel']], []),
         // ['react-hot-loader/babel'],
         ['@babel/plugin-proposal-class-properties', { loose: true }],
+        ['@babel/plugin-transform-runtime'],
         [
           'import',
           {
