@@ -3,11 +3,18 @@ import type Config from 'webpack-chain';
 import type { IOptions } from '../def';
 
 export default function devServer(config: Config, options: IOptions) {
-  const { rootPath } = options;
+  const { rootPath, publicPath } = options;
   config.devServer
     .contentBase(resolve(rootPath, 'public'))
+    .publicPath(publicPath)
     .disableHostCheck(true)
-    .historyApiFallback(true)
+    .historyApiFallback(
+      publicPath === '/' ?
+        true :
+        {
+          rewrites: [{ from: /^\/.*$/, to: `${publicPath}index.html` }],
+        },
+    )
     .compress(true)
     .hot(true)
     .hotOnly(true)

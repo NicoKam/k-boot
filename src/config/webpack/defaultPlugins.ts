@@ -9,13 +9,28 @@ import type Config from 'webpack-chain';
 import type { IOptions } from '../def';
 
 export default function defaultPlugin(config: Config, options: IOptions) {
-  const { rootPath, srcPath, mode } = options;
+  const { rootPath, srcPath, mode, publicPath } = options;
   config.plugin('clean-plugin').use(CleanWebpackPlugin);
-  let indexHtmlPath = resolve(rootPath, srcPath, 'index.html');
-  if (!existsSync(indexHtmlPath)) {
-    indexHtmlPath = resolve(__dirname, '../../../assets/index.html');
+
+  let htmlTemplatePath = resolve(rootPath, srcPath, 'index.html');
+  const ejsPath = resolve(rootPath, srcPath, 'document.ejs');
+  if (!existsSync(htmlTemplatePath)) {
+    // ejs
+    if (existsSync(ejsPath)) {
+      htmlTemplatePath = ejsPath;
+    } else {
+      htmlTemplatePath = resolve(__dirname, '../../../assets/index.html');
+    }
   }
-  config.plugin('html-plugin').use(HtmlPlugin, [{ template: indexHtmlPath }]);
+  config.plugin('html-plugin').use(HtmlPlugin, [
+    {
+      template: htmlTemplatePath,
+      templateParameters: {
+        publicPath,
+      },
+    },
+  ]);
+
   const staticFilesPath = resolve(rootPath, './public');
   if (existsSync(staticFilesPath) && readdirSync(staticFilesPath).length) {
     config.plugin('copy-plugin').use(CopyWebpackPlugin, [
