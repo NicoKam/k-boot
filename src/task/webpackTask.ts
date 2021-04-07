@@ -1,18 +1,19 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import { resolve } from 'path';
+import { mkdirSync, writeFileSync } from 'fs';
+import { dirname, resolve } from 'path';
 import portfinder from 'portfinder';
 // import opener from 'opener';
 import scanRoutes from 'react-convention-router';
 import type { Configuration } from 'webpack';
 import webpack from 'webpack';
-import WebpackDevServer from 'webpack-dev-server';
 import type Config from 'webpack-chain';
+import WebpackDevServer from 'webpack-dev-server';
 import type { Env } from '../config/def';
 import { defaultKBootConfig } from '../config/def';
-import logger from '../utils/logger';
 import getUserConfig from '../config/userConfig';
 import getWebpackConfig from '../config/webpack';
+import logger from '../utils/logger';
 
 const pkg = require('../../package.json');
 
@@ -134,10 +135,15 @@ function watchRoutes(cwd: string, callback?: () => void) {
   const mode = process.env.NODE_ENV as Env;
   const { srcPath } = userConfig;
   let first = true;
+  const outputIndexPath = resolve(cwd, srcPath, 'pages', '.entry', 'index.js');
+
   scanRoutes({
     watch: mode === 'development',
     pageRoot: resolve(cwd, srcPath, 'pages'),
-    outputPath: resolve(cwd, srcPath, 'pages', '.entry', 'index.js'),
+    output: (outputStr, templateStr) => {
+      mkdirSync(dirname(outputIndexPath), { recursive: true });
+      writeFileSync(outputIndexPath, templateStr.replace('@routeConfig', outputStr));
+    },
     templateFile: resolve(__dirname, '../../assets/RouterConfig.template.js'),
     modifyRoutes(routes) {
       if (first) {
