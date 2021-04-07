@@ -140,6 +140,7 @@ function watchRoutes(cwd: string, callback?: () => void) {
   scanRoutes({
     watch: mode === 'development',
     pageRoot: resolve(cwd, srcPath, 'pages'),
+    outputPath: dirname(outputIndexPath),
     output: (outputStr, templateStr) => {
       mkdirSync(dirname(outputIndexPath), { recursive: true });
       writeFileSync(outputIndexPath, templateStr.replace('@routeConfig', outputStr));
